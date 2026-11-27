@@ -181,12 +181,15 @@ def build_standalone_dist(atlas: dict):
     app_js = (ROOT / "app.js").read_text(encoding="utf-8")
     data_js = "window.HAT_ATLAS = " + json.dumps(atlas, ensure_ascii=False) + ";"
 
-    standalone = index_html.replace(
-        '<link rel="stylesheet" href="styles.css" />',
-        f"<style>\n{styles_css}\n</style>",
-    ).replace(
-        '<script src="data/all.js"></script>\n  <script src="app.js"></script>',
-        f"<script>\n{data_js}\n</script>\n  <script>\n{app_js}\n</script>",
+    standalone = re.sub(
+        r'<link rel="stylesheet" href="styles\.css[^"]*"\s*/>',
+        lambda _: f"<style>\n{styles_css}\n</style>",
+        index_html,
+    )
+    standalone = re.sub(
+        r'<script src="data/all\.js[^"]*"></script>\s*<script src="app\.js[^"]*"></script>',
+        lambda _: f"<script>\n{data_js}\n</script>\n  <script>\n{app_js}\n</script>",
+        standalone,
     )
 
     DIST_DIR.mkdir(parents=True, exist_ok=True)
