@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>小叶子的全球帽子分析图鉴</title>
+  <meta name="description" content="小叶子的全球帽子分析图鉴：查询全球设计师帽饰品牌历史款式、图片介绍、销量/热度/艺术性排行与购买渠道。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+SC:wght@500;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="masthead">
+    <div class="wrap masthead-inner">
+      <div class="brandmark">
+        <h1>小叶子的全球帽子分析图鉴</h1>
+      </div>
+      <nav class="tabs" role="tablist" id="tabs">
+        <button role="tab" id="tab-gallery" data-view="gallery" class="tab active">图鉴</button>
+        <button role="tab" id="tab-rank" data-view="rank" class="tab">排行榜</button>
+        <button role="tab" id="tab-brands" data-view="brands" class="tab">品牌与渠道</button>
+      </nav>
+    </div>
+    <div class="wrap stats" id="stats"></div>
+  </header>
+
+  <main class="wrap">
+    <!-- 图鉴 -->
+    <section id="view-gallery" class="view active" aria-labelledby="tab-gallery">
+      <div class="toolbar">
+        <input id="q" type="search" placeholder="搜索款式、名人、系列、材质…" />
+        <select id="f-brand"><option value="">全部品牌（A–Z）</option></select>
+        <select id="f-cat"><option value="">全部类别</option></select>
+        <select id="f-sort">
+          <option value="sales">按销量</option>
+          <option value="heat">按热度</option>
+          <option value="artistry">按艺术性</option>
+          <option value="year-desc">年份 新→旧</option>
+          <option value="year-asc">年份 旧→新</option>
+        </select>
+      </div>
+      <p class="result-count" id="result-count"></p>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <!-- 排行榜 -->
+    <section id="view-rank" class="view" aria-labelledby="tab-rank">
+      <div class="rank-switch" id="rank-switch">
+        <button data-rank="sales" class="chip active">销量榜</button>
+        <button data-rank="heat" class="chip">热度榜</button>
+        <button data-rank="artistry" class="chip">艺术性榜</button>
+        <button data-rank="brand" class="chip">品牌对比</button>
+      </div>
+      <div class="notice">
+        <strong>三大评估维度（0–100）：</strong>
+        <b>销量指数</b>综合公开电商销量区间、官网常青主推/多渠道铺货与补货频次估算（手工孤品/非商业展品分值较低）；
+        <b>热度分</b>综合名人/王室佩戴、秀场与媒体曝光、站内热搜；
+        <b>艺术性分</b>综合雕塑结构、手工工艺难度、亚文化/先锋原创度与博物馆典藏价值。
+      </div>
+      <div id="rank-body"></div>
+    </section>
+
+    <!-- 品牌 -->
+    <section id="view-brands" class="view" aria-labelledby="tab-brands">
+      <div class="brand-list" id="brand-list"></div>
+    </section>
+  </main>
+
+  <footer class="wrap foot">
+    图片版权归各品牌及原始来源所有，本平台仅存链接并标注出处。价格以采集时页面为准，可能已变动。
+    <span id="fx-note"></span>
+  </footer>
+
+  <!-- 详情弹层 -->
+  <div class="modal" id="modal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="m-title">
+      <button class="modal-close" data-close aria-label="关闭">×</button>
+      <div class="modal-body" id="modal-body"></div>
+    </article>
+  </div>
+
+  <script src="data/all.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
