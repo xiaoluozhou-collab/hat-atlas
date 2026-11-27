@@ -4,26 +4,48 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>全球帽饰分析图鉴与创意融合</title>
-  <meta name="description" content="全球帽饰分析图鉴与创意融合：收录全球 51 家设计师与手作帽饰品牌，提供全有图图鉴、销量/热度/艺术性排行、单帽文字二创与 2–3 顶帽饰融合创作。" />
+  <meta name="description" content="全球帽饰分析图鉴与创意融合：收录全球 51 家设计师与手作帽饰品牌，支持中/英/法/意四语切换、销量/热度/艺术性排行、单帽文字二创与 2–3 顶帽饰融合创作。" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Noto+Serif+SC:wght@500;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css?v=20261127-3" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;600&family=Noto+Serif+SC:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=20261127-4" />
 </head>
 <body>
   <header class="masthead">
-    <div class="wrap masthead-inner">
-      <div class="brandmark">
-        <h1>全球帽饰分析图鉴与创意融合</h1>
+    <div class="topbar">
+      <div class="wrap topbar-inner">
+        <span class="topbar-meta" id="topbar-meta">HAUTE MILLINERY ARCHIVE &amp; ATELIER</span>
+        <div class="lang-switch" id="lang-switch" role="group" aria-label="Language">
+          <button type="button" class="lang-btn active" data-lang="zh">中文</button>
+          <span class="lang-sep">/</span>
+          <button type="button" class="lang-btn" data-lang="en">EN</button>
+          <span class="lang-sep">/</span>
+          <button type="button" class="lang-btn" data-lang="fr">FR</button>
+          <span class="lang-sep">/</span>
+          <button type="button" class="lang-btn" data-lang="it">IT</button>
+        </div>
       </div>
-      <nav class="tabs" role="tablist" id="tabs">
-        <button role="tab" id="tab-gallery" data-view="gallery" class="tab active">图鉴</button>
-        <button role="tab" id="tab-studio" data-view="studio" class="tab">创意融合 <span id="studio-count" class="tab-badge" hidden>0</span></button>
-        <button role="tab" id="tab-rank" data-view="rank" class="tab">排行榜</button>
-        <button role="tab" id="tab-brands" data-view="brands" class="tab">品牌与渠道</button>
-      </nav>
     </div>
-    <div class="wrap stats" id="stats"></div>
+
+    <div class="wrap masthead-brand">
+      <h1 id="site-title">全球帽饰分析图鉴与创意融合</h1>
+      <p class="site-subtitle" id="site-subtitle">GLOBAL MILLINERY ARCHIVE &amp; CREATIVE FUSION</p>
+    </div>
+
+    <div class="nav-bar">
+      <div class="wrap nav-inner">
+        <nav class="tabs" role="tablist" id="tabs">
+          <button role="tab" id="tab-gallery" data-view="gallery" class="tab active" data-i18n="tab_gallery">图鉴</button>
+          <button role="tab" id="tab-studio" data-view="studio" class="tab"><span data-i18n="tab_studio">创意融合</span> <span id="studio-count" class="tab-badge" hidden>0</span></button>
+          <button role="tab" id="tab-rank" data-view="rank" class="tab" data-i18n="tab_rank">排行榜</button>
+          <button role="tab" id="tab-brands" data-view="brands" class="tab" data-i18n="tab_brands">品牌与渠道</button>
+        </nav>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="wrap stats" id="stats"></div>
+    </div>
   </header>
 
   <main class="wrap">
@@ -34,16 +56,16 @@
         <select id="f-brand"><option value="">全部品牌（A–Z）</option></select>
         <select id="f-cat"><option value="">全部类别</option></select>
         <select id="f-sort">
-          <option value="sales">按销量</option>
-          <option value="heat">按热度</option>
-          <option value="artistry">按艺术性</option>
-          <option value="year-desc">年份 新→旧</option>
-          <option value="year-asc">年份 旧→新</option>
+          <option value="sales" data-i18n="sort_sales">按销量</option>
+          <option value="heat" data-i18n="sort_heat">按热度</option>
+          <option value="artistry" data-i18n="sort_artistry">按艺术性</option>
+          <option value="year-desc" data-i18n="sort_year_desc">年份 新→旧</option>
+          <option value="year-asc" data-i18n="sort_year_asc">年份 旧→新</option>
         </select>
       </div>
       <div class="gallery-bar">
         <p class="result-count" id="result-count"></p>
-        <span class="gallery-tip">提示：点击卡片右下角 <b>+ 选入二创</b>，可选中 1 顶文字二创，或选中 2–3 顶融合生成新帽款</span>
+        <span class="gallery-tip" id="gallery-tip"></span>
       </div>
       <div class="grid" id="grid"></div>
     </section>
@@ -51,88 +73,70 @@
     <!-- 创意融合工坊 -->
     <section id="view-studio" class="view" aria-labelledby="tab-studio">
       <div class="studio-layout">
-        <!-- 左侧：灵感选帽与创作控制 -->
         <div class="studio-panel">
           <div class="studio-head">
             <div>
-              <h2>帽饰二创与融合工坊</h2>
-              <p class="studio-sub">选中 <b>1 顶</b>帽子输入文字进行风格二创，或选中 <b>2–3 顶</b>帽子进行跨品牌基因融合，生成全新帽款图片与设计说明。</p>
+              <h2 data-i18n="studio_title">帽饰二创与融合工坊</h2>
+              <p class="studio-sub" data-i18n="studio_sub">选中 1 顶帽子输入文字进行风格二创，或选中 2–3 顶帽子进行跨品牌基因融合，生成全新帽款图片与设计说明。</p>
             </div>
             <div class="studio-quick-actions">
-              <button class="btn ghost sm" id="btn-pick-gallery">+ 去图鉴选帽</button>
-              <button class="btn ghost sm" id="btn-random-fusion">🎲 随机融合</button>
-              <button class="btn ghost sm" id="btn-clear-selected">清空</button>
+              <button class="btn ghost sm" id="btn-pick-gallery" data-i18n="btn_pick_gallery">+ 去图鉴选帽</button>
+              <button class="btn ghost sm" id="btn-random-fusion" data-i18n="btn_random_fusion">随机融合</button>
+              <button class="btn ghost sm" id="btn-clear-selected" data-i18n="btn_clear">清空</button>
             </div>
           </div>
 
           <div class="studio-block">
             <div class="studio-label">
-              <span>已选参考帽款（<b id="sel-num">0</b> / 3）</span>
-              <span id="studio-mode-pill" class="badge">请先选择 1–3 顶帽子</span>
+              <span><span data-i18n="selected_hats">已选参考帽款</span>（<b id="sel-num">0</b> / 3）</span>
+              <span id="studio-mode-pill" class="badge"></span>
             </div>
             <div class="slot-grid" id="studio-slots"></div>
           </div>
 
           <div class="studio-block">
-            <div class="studio-label"><span>风格方向（可多选叠加）</span></div>
-            <div class="style-chips" id="style-chips">
-              <button type="button" class="chip sm" data-style="亚文化解构">亚文化解构</button>
-              <button type="button" class="chip sm" data-style="赛博金属未来感">赛博金属未来感</button>
-              <button type="button" class="chip sm" data-style="暗黑哥特蕾丝">暗黑哥特蕾丝</button>
-              <button type="button" class="chip sm" data-style="高定雕塑花艺">高定雕塑花艺</button>
-              <button type="button" class="chip sm" data-style="东方非遗夏布手作">东方非遗夏布手作</button>
-              <button type="button" class="chip sm" data-style="极简建筑雕塑">极简建筑雕塑</button>
-              <button type="button" class="chip sm" data-style="超现实波普">超现实波普</button>
-              <button type="button" class="chip sm" data-style="复古好莱坞浪漫">复古好莱坞浪漫</button>
-            </div>
+            <div class="studio-label"><span data-i18n="style_dir">风格方向（可多选叠加）</span></div>
+            <div class="style-chips" id="style-chips"></div>
           </div>
 
           <div class="studio-block">
             <label class="studio-label" for="studio-prompt">
-              <span>二创 / 融合文字说明</span>
-              <span class="rt-sub">可描述材质、配色、帽檐变化、装饰元素等</span>
+              <span data-i18n="prompt_label">二创 / 融合文字说明</span>
+              <span class="rt-sub" data-i18n="prompt_hint">可描述材质、配色、帽檐变化、装饰元素等</span>
             </label>
-            <textarea id="studio-prompt" class="studio-textarea" rows="4" placeholder="例如：保留第一顶的宽檐雕塑廓形，融入第二顶的暗黑蕾丝与流动银色金属丝，改成雾霾蓝与酒红撞色，增加半透明面纱细节…"></textarea>
+            <textarea id="studio-prompt" class="studio-textarea" rows="4"></textarea>
           </div>
 
           <div class="studio-submit-row">
-            <button type="button" class="btn primary-lg" id="btn-generate">✨ 生成二创新图与设计说明</button>
-            <button type="button" class="btn ghost" id="btn-reroll" hidden>🔄 换一版构图</button>
+            <button type="button" class="btn primary-lg" id="btn-generate" data-i18n="btn_generate">生成二创新图与设计说明</button>
+            <button type="button" class="btn ghost" id="btn-reroll" data-i18n="btn_reroll" hidden>换一版构图</button>
           </div>
 
           <details class="api-details">
-            <summary>高级绘图引擎设置（默认免费免 Key 直接生成，可选填自有 OpenAI 兼容接口）</summary>
+            <summary data-i18n="api_summary">高级绘图引擎设置（默认免费免 Key 直接生成，可选填自有 OpenAI 兼容接口）</summary>
             <div class="api-grid">
               <label>
-                <span>自定义 Endpoint（留空则使用默认免费 AI 绘图引擎）</span>
+                <span data-i18n="api_endpoint_label">自定义 Endpoint（留空则使用默认免费 AI 绘图引擎）</span>
                 <input id="api-endpoint" type="url" placeholder="https://api.openai.com/v1/images/generations" />
               </label>
               <label>
-                <span>API Key（仅保存在本地浏览器，不上传）</span>
+                <span data-i18n="api_key_label">API Key（仅保存在本地浏览器，不上传）</span>
                 <input id="api-key" type="password" placeholder="sk-..." />
               </label>
               <label>
-                <span>模型名称</span>
+                <span data-i18n="api_model_label">模型名称</span>
                 <input id="api-model" type="text" placeholder="gpt-image-1 / dall-e-3" />
               </label>
             </div>
           </details>
         </div>
 
-        <!-- 右侧：生成的新图与文字说明 -->
-        <div class="studio-result-panel" id="studio-result">
-          <div class="studio-placeholder">
-            <div class="ph-icon">✦</div>
-            <h3>等待创意生成</h3>
-            <p>在左侧选择 1 顶帽子输入二创文字，或选择 2–3 顶帽子融合创作，点击「生成二创新图与设计说明」后，这里将呈现全新帽款视觉图与完整设计解读。</p>
-          </div>
-        </div>
+        <div class="studio-result-panel" id="studio-result"></div>
       </div>
 
-      <!-- 已保存的二创作品集 -->
       <section class="saved-section" id="saved-section" hidden>
         <div class="studio-label">
-          <span>我的二创与融合作品集（<b id="saved-num">0</b> 件 · 本地自动保存）</span>
+          <span><span data-i18n="saved_title">我的二创与融合作品集</span>（<b id="saved-num">0</b>）</span>
         </div>
         <div class="saved-grid" id="saved-grid"></div>
       </section>
@@ -141,17 +145,12 @@
     <!-- 排行榜 -->
     <section id="view-rank" class="view" aria-labelledby="tab-rank">
       <div class="rank-switch" id="rank-switch">
-        <button data-rank="sales" class="chip active">销量榜</button>
-        <button data-rank="heat" class="chip">热度榜</button>
-        <button data-rank="artistry" class="chip">艺术性榜</button>
-        <button data-rank="brand" class="chip">品牌对比</button>
+        <button data-rank="sales" class="chip active" data-i18n="rank_sales">销量榜</button>
+        <button data-rank="heat" class="chip" data-i18n="rank_heat">热度榜</button>
+        <button data-rank="artistry" class="chip" data-i18n="rank_artistry">艺术性榜</button>
+        <button data-rank="brand" class="chip" data-i18n="rank_brand">品牌对比</button>
       </div>
-      <div class="notice">
-        <strong>三大评估维度（0–100）：</strong>
-        <b>销量指数</b>综合公开电商销量区间、官网常青主推/多渠道铺货与补货频次估算（手工孤品/非商业展品分值较低）；
-        <b>热度分</b>综合名人/王室佩戴、秀场与媒体曝光、站内热搜；
-        <b>艺术性分</b>综合雕塑结构、手工工艺难度、亚文化/先锋原创度与博物馆典藏价值。
-      </div>
+      <div class="notice" id="rank-notice"></div>
       <div id="rank-body"></div>
     </section>
 
@@ -166,27 +165,30 @@
     <div class="fusion-dock-inner">
       <div class="dock-thumbs" id="dock-thumbs"></div>
       <div class="dock-actions">
-        <button type="button" class="btn ghost sm" id="dock-clear">清空</button>
-        <button type="button" class="btn sm" id="dock-go">进入创意融合 →</button>
+        <button type="button" class="btn ghost sm" id="dock-clear" data-i18n="btn_clear">清空</button>
+        <button type="button" class="btn sm" id="dock-go"></button>
       </div>
     </div>
   </div>
 
-  <footer class="wrap foot">
-    图片版权归各品牌及原始来源所有，本平台仅存链接并标注出处；创意融合生成的新图与设计说明仅供灵感参考。
-    <span id="fx-note"></span>
+  <footer class="foot-wrap">
+    <div class="wrap foot">
+      <div class="foot-brand" id="foot-brand">全球帽饰分析图鉴与创意融合</div>
+      <div class="foot-copy" id="foot-copy"></div>
+      <div class="foot-fx" id="fx-note"></div>
+    </div>
   </footer>
 
   <!-- 详情弹层 -->
   <div class="modal" id="modal" hidden>
     <div class="modal-backdrop" data-close></div>
     <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="m-title">
-      <button class="modal-close" data-close aria-label="关闭">×</button>
+      <button class="modal-close" data-close aria-label="Close">×</button>
       <div class="modal-body" id="modal-body"></div>
     </article>
   </div>
 
-  <script src="data/all.js?v=20261127-3"></script>
-  <script src="app.js?v=20261127-3"></script>
+  <script src="data/all.js?v=20261127-4"></script>
+  <script src="app.js?v=20261127-4"></script>
 </body>
 </html>
